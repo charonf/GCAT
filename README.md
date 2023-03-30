@@ -1,2 +1,2 @@
 #  GCAT
-The code and models are coming soon~
+The code and models coming soon~
