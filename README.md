@@ -17,5 +17,3 @@ The testing results will be saved in the `data/datset_results` folder.
 ## How To Train
 The training code will be published soon~
 
-## Contact
-If you have any question, please email zjwu_97@stu.ecnu.edu.cn
