@@ -5,7 +5,7 @@ import torch
 
 from utils import utils_logger
 from utils import utils_image as util
-from models.GCATimport GCAT
+from models.GCAT import GCAT
 from utils.model_summary import get_model_flops, get_model_activation
 
 
@@ -34,7 +34,7 @@ def main():
         num_out_ch=3,
         num_feat=48,
         num_heads=1,
-        num_block=10,
+        num_block=32,
         upscale = 2,)
     model.load_state_dict(torch.load(model_path)['params_ema'], strict=True)
     model.eval()
