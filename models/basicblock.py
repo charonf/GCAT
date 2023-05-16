@@ -27,24 +27,6 @@ def sequential(*args):
     return nn.Sequential(*modules)
 
 
-'''
-# --------------------------------------------
-# Useful blocks
-# https://github.com/xinntao/BasicSR
-# --------------------------------
-# conv + normaliation + relu (conv)
-# (PixelUnShuffle)
-# (ConditionalBatchNorm2d)
-# concat (ConcatBlock)
-# sum (ShortcutBlock)
-# resblock (ResBlock)
-# Channel Attention (CA) Layer (CALayer)
-# Residual Channel Attention Block (RCABlock)
-# Residual Channel Attention Group (RCAGroup)
-# Residual Dense Block (ResidualDenseBlock_5C)
-# Residual in Residual Dense Block (RRDB)
-# --------------------------------------------
-'''
 
 
 # --------------------------------------------
@@ -94,16 +76,7 @@ def conv(in_channels=64, out_channels=64, kernel_size=3, stride=1, padding=1, bi
 # inverse of pixel_shuffle
 # --------------------------------------------
 def pixel_unshuffle(input, upscale_factor):
-    r"""Rearranges elements in a Tensor of shape :math:`(C, rH, rW)` to a
-    tensor of shape :math:`(*, r^2C, H, W)`.
 
-    Authors:
-        Zhaoyi Yan, https://github.com/Zhaoyi-Yan
-        Kai Zhang, https://github.com/cszn/FFDNet
-
-    Date:
-        01/Jan/2019
-    """
     batch_size, channels, in_height, in_width = input.size()
 
     out_height = in_height // upscale_factor
@@ -141,10 +114,7 @@ class PixelUnShuffle(nn.Module):
         return 'upscale_factor={}'.format(self.upscale_factor)
 
 
-# --------------------------------------------
-# conditional batch norm
-# https://github.com/pytorch/pytorch/issues/8985#issuecomment-405080775
-# --------------------------------------------
+
 class ConditionalBatchNorm2d(nn.Module):
     def __init__(self, num_features, num_classes):
         super().__init__()
@@ -220,21 +190,7 @@ class ResBlock(nn.Module):
 # x + conv1(concat(split(relu(conv(x)))x3))
 # --------------------------------------------
 class IMDBlock(nn.Module):
-    """
-    @inproceedings{hui2019lightweight,
-      title={Lightweight Image Super-Resolution with Information Multi-distillation Network},
-      author={Hui, Zheng and Gao, Xinbo and Yang, Yunchu and Wang, Xiumei},
-      booktitle={Proceedings of the 27th ACM International Conference on Multimedia (ACM MM)},
-      pages={2024--2032},
-      year={2019}
-    }
-    @inproceedings{zhang2019aim,
-      title={AIM 2019 Challenge on Constrained Super-Resolution: Methods and Results},
-      author={Kai Zhang and Shuhang Gu and Radu Timofte and others},
-      booktitle={IEEE International Conference on Computer Vision Workshops},
-      year={2019}
-    }
-    """
+
     def __init__(self, in_channels=64, out_channels=64, kernel_size=3, stride=1, padding=1, bias=True, mode='CL', d_rate=0.25, negative_slope=0.05):
         super(IMDBlock, self).__init__()
         self.d_nc = int(in_channels * d_rate)
@@ -420,16 +376,7 @@ class RRDB(nn.Module):
         return out.mul_(0.2) + x
 
 
-"""
-# --------------------------------------------
-# Upsampler
-# Kai Zhang, https://github.com/cszn/KAIR
-# --------------------------------------------
-# upsample_pixelshuffle
-# upsample_upconv
-# upsample_convtranspose
-# --------------------------------------------
-"""
+
 
 
 # --------------------------------------------
@@ -469,16 +416,6 @@ def upsample_convtranspose(in_channels=64, out_channels=3, kernel_size=2, stride
     return up1
 
 
-'''
-# --------------------------------------------
-# Downsampler
-# Kai Zhang, https://github.com/cszn/KAIR
-# --------------------------------------------
-# downsample_strideconv
-# downsample_maxpool
-# downsample_avgpool
-# --------------------------------------------
-'''
 
 
 # --------------------------------------------
@@ -528,10 +465,7 @@ def downsample_avgpool(in_channels=64, out_channels=64, kernel_size=3, stride=1,
 '''
 
 
-# --------------------------------------------
-# non-local block with embedded_gaussian
-# https://github.com/AlexHex7/Non-local_pytorch
-# --------------------------------------------
+
 class NonLocalBlock2D(nn.Module):
     def __init__(self, nc=64, kernel_size=1, stride=1, padding=0, bias=True, act_mode='B', downsample=False, downsample_mode='maxpool', negative_slope=0.2):
 
