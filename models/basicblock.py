@@ -92,16 +92,7 @@ def pixel_unshuffle(input, upscale_factor):
 
 
 class PixelUnShuffle(nn.Module):
-    r"""Rearranges elements in a Tensor of shape :math:`(C, rH, rW)` to a
-    tensor of shape :math:`(*, r^2C, H, W)`.
 
-    Authors:
-        Zhaoyi Yan, https://github.com/Zhaoyi-Yan
-        Kai Zhang, https://github.com/cszn/FFDNet
-
-    Date:
-        01/Jan/2019
-    """
 
     def __init__(self, upscale_factor):
         super(PixelUnShuffle, self).__init__()
