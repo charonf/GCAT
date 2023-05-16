@@ -4,14 +4,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-'''
-# --------------------------------------------
-# Advanced nn.Sequential
-# https://github.com/xinntao/BasicSR
-# --------------------------------------------
-'''
-
-
 def sequential(*args):
     """Advanced nn.Sequential.
 
